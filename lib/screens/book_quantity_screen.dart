@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:seat_booking_app/blocs/seat_layout_cubit.dart';
+import 'package:seat_booking_app/models/seat_layout_state_model.dart';
 import 'package:seat_booking_app/widgets/custom_text_form_field.dart';
 
 import '../widgets/custom_app_bar.dart';
@@ -32,7 +35,7 @@ class _BookingQuantityScreenState extends State<BookingQuantityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Booking Quantity',
+        title: 'Booking Seat Quantity Screen',
       ),
       body: SafeArea(
         child: Form(
@@ -51,7 +54,18 @@ class _BookingQuantityScreenState extends State<BookingQuantityScreen> {
                   controller: _quantityController,
                   labelText: 'Number of Tickets',
                   keyboardType: TextInputType.number,
-                  errorText: 'Please enter number of tickets',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter number of tickets';
+                    }
+                    final availableSeats =
+                        SeatLayoutStateModel.getAvailableSeatsCount(
+                            context.read<SeatLayoutCubit>().state.currentSeats);
+                    if (int.parse(value) > availableSeats) {
+                      return 'Please enter less than Available tickets: $availableSeats';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 24),
                 FilledButton(

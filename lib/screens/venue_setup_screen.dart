@@ -53,15 +53,31 @@ class _VenueSetupScreenState extends State<VenueSetupScreen> {
                   controller: _rowsController,
                   labelText: 'Number of Rows',
                   keyboardType: TextInputType.number,
-                  errorText: 'Please enter number of rows',
                   textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter number of rows';
+                    }
+                    if (int.parse(value) > 50) {
+                      return 'Please enter less than 50';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 CustomTextFormField(
                   controller: _columnsController,
                   labelText: 'Number of Columns',
                   keyboardType: TextInputType.number,
-                  errorText: 'Please enter number of columns',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter number of columns';
+                    }
+                    if (int.parse(value) > 50) {
+                      return 'Please enter less than 50';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 24),
                 FilledButton(

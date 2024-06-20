@@ -18,6 +18,11 @@ class SeatLayoutStateModel {
       .where((val) => val.seatState == SeatState.selected)
       .length;
 
+  static int getAvailableSeatsCount(List<List<SeatModel>> seats) => seats
+      .expand((i) => i)
+      .where((val) => val.seatState == SeatState.available)
+      .length;
+
   SeatLayoutStateModel copyWith({
     int? rows,
     int? cols,

@@ -29,7 +29,6 @@ class SeatBookingApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: const VenueSetupScreen(),
-          // home: const CinemaHall(),
         ),
       ),
     );
